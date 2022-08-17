@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2026" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="body" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="postId" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Post" representedClassName="Post" syncable="YES">
+        <attribute name="id" attributeType="String"/>
+        <attribute name="postDesctiption" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="userId" attributeType="String"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <attribute name="webSite" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Comment" positionX="-45" positionY="0" width="128" height="88"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="User" positionX="-54" positionY="-9" width="128" height="118"/>
+    </elements>
+</model>
