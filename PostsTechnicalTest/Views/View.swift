@@ -13,12 +13,6 @@ protocol View: AnyObject {
     func displayAlert(message: String)
 }
 
-protocol DetailView {
-    func display(result:[CommentViewModel])
-    func display(user: UserViewModel, favoriteComments: [CommentViewModel])
-    func displayAlert(message: String)
-}
-
 struct PostViewModel {
     var userId: String
     var id: String

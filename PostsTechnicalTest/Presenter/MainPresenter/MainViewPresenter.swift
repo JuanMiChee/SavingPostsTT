@@ -15,15 +15,15 @@ class MainViewPresenter: MainPresenter {
     weak var view: View?
     
     private let fetchData: FetchDataProtocol
-    private let fetchCoreData: Storage
+    private let storage: Storage
 
     init(fetchData: FetchDataProtocol, fetchCoreData: Storage){
-        self.fetchCoreData = fetchCoreData
+        self.storage = fetchCoreData
         self.fetchData = fetchData
     }
     
     private func createStoragePostViewModel() -> [PostViewModel]{
-        let storedPosts = fetchCoreData.fetchPosts()
+        let storedPosts = storage.fetchPosts()
         let coredataViewModelMapped: [PostViewModel] = storedPosts.map { (postModel) -> PostViewModel in
             return PostViewModel(userId: postModel.userId,
                                  id: postModel.id,

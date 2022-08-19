@@ -9,18 +9,17 @@ import Foundation
 @testable import PostsTechnicalTest
 class StorageMock: Storage {
     
-    var postModel = [PostModel]()
+    var postModels = [PostModel]()
     var userModel = UserPostsModel(name: "", email: "", phone: "", website: "", id: "")
     var commentModel = [CommetModel]()
 
-    var recivedPosts: PostModel!
-    var recivedComments: [CommetModel]!
-
-    var recivedUser: UserViewModel!
+    var toSaveComments: [CommentViewModel]!
+    var toSavePosts: PostViewModel!
+    var toSaveUsers: UserViewModel!
 
     
     func fetchPosts() -> [PostModel] {
-        return postModel
+        return postModels
     }
     
     func fetchUser() -> UserPostsModel? {
@@ -32,8 +31,8 @@ class StorageMock: Storage {
     }
     
     func savePost(post: PostViewModel, comments: [CommentViewModel], user: UserViewModel) {
-//        recivedPosts = post
-//        recivedComments = comments
-//        recivedUser = user
+        toSavePosts = post
+        toSaveComments = comments
+        toSaveUsers = user
     }
 }

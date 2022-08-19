@@ -121,12 +121,6 @@ extension DetailViewController: DetailView{
             self.tableViewTwo.reloadData()
         }
     }
-    
-//    func userDisplay(result:[UserViewModel]){
-//        userViewModel = result
-//        DispatchQueue.main.async {
-//        }
-//    }
 }
 
 extension DetailViewController: UITableViewDelegate{

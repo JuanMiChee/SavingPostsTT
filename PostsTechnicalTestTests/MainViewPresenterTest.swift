@@ -39,8 +39,13 @@ class MainViewPresenterTests: XCTestCase {
         //When
         sut.handleViewDidLoad()
         fetchData.recivedPostsCompetion!(.success(serverModelArray))
+        
+        
         //Then
         XCTAssertEqual(view.recivedArray?.count, 1)
+        XCTAssertEqual(view.recivedFavoritesArray?.count, 0)
+
+        
     }
     
     func testWhenFailureReciveAlert() throws {
@@ -50,5 +55,17 @@ class MainViewPresenterTests: XCTestCase {
 
         XCTAssertEqual(view.recivedAlert, "couldn\'t find data, sending coredata favorites")
 
+    }
+    
+    func testWhenServersFetchFailsTakeTheStorageData() throws{
+        //given
+        let givenPostModel = PostModel(userId: "siu", id: "", title: "", body: "asdasd")
+        storage.postModels = [givenPostModel]
+
+        //when
+        sut.handleViewDidLoad()
+        fetchData.recivedPostsCompetion!(.success(storage.postModels))
+        //then
+        XCTAssertEqual(view.recivedFavoritesArray?.count, 1)
     }
 }

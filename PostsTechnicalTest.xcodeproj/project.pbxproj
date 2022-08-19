@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		735C859128AEE32F008E9D84 /* DetailViewPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735C859028AEE32F008E9D84 /* DetailViewPresenterTest.swift */; };
+		735C859D28AEE49C008E9D84 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735C859C28AEE49C008E9D84 /* DetailView.swift */; };
+		735C85A528AEEA1C008E9D84 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735C85A428AEEA1C008E9D84 /* DetailView.swift */; };
+		735C85AA28AEEA5B008E9D84 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735C85A928AEEA5B008E9D84 /* PostViewModel.swift */; };
+		735C85AF28AEEA78008E9D84 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735C85AE28AEEA78008E9D84 /* CommentViewModel.swift */; };
+		735C85B428AEEA83008E9D84 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735C85B328AEEA83008E9D84 /* UserViewModel.swift */; };
 		736E5F1F28AAE61800F769F2 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E5F1928AAE61800F769F2 /* Post+CoreDataClass.swift */; };
 		736E5F2028AAE61800F769F2 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E5F1A28AAE61800F769F2 /* Post+CoreDataProperties.swift */; };
 		736E5F2128AAE61800F769F2 /* Comment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E5F1B28AAE61800F769F2 /* Comment+CoreDataClass.swift */; };
@@ -59,6 +65,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		735C859028AEE32F008E9D84 /* DetailViewPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewPresenterTest.swift; sourceTree = "<group>"; };
+		735C859C28AEE49C008E9D84 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		735C85A428AEEA1C008E9D84 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		735C85A928AEEA5B008E9D84 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		735C85AE28AEEA78008E9D84 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
+		735C85B328AEEA83008E9D84 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		736E5F1928AAE61800F769F2 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
 		736E5F1A28AAE61800F769F2 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		736E5F1B28AAE61800F769F2 /* Comment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comment+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -124,6 +136,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		735C85B828AEEA90008E9D84 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				735C85A928AEEA5B008E9D84 /* PostViewModel.swift */,
+				735C85AE28AEEA78008E9D84 /* CommentViewModel.swift */,
+				735C85B328AEEA83008E9D84 /* UserViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		735C85C428AEEAC1008E9D84 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7370A3FF28A2FED200D0287B /* View.swift */,
+				735C85A428AEEA1C008E9D84 /* DetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		736E5F2828AAF5EC00F769F2 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +192,8 @@
 		7370A39928A2EF4000D0287B /* PostsTechnicalTest */ = {
 			isa = PBXGroup;
 			children = (
+				735C85C428AEEAC1008E9D84 /* Views */,
+				735C85B828AEEA90008E9D84 /* ViewModels */,
 				736E5F2828AAF5EC00F769F2 /* Storage */,
 				73E8654C28AA915B00C8DDDD /* Delegates */,
 				7370A43828A561FE00D0287B /* Scenes */,
@@ -173,7 +206,6 @@
 				7370A3AB28A2EF4200D0287B /* Info.plist */,
 				7370A3A328A2EF4000D0287B /* PostsTechnicalTest.xcdatamodeld */,
 				7370A3DB28A2F96A00D0287B /* FetchData.swift */,
-				7370A3FF28A2FED200D0287B /* View.swift */,
 			);
 			path = PostsTechnicalTest;
 			sourceTree = "<group>";
@@ -186,6 +218,8 @@
 				736E5F5A28AD8E1900F769F2 /* FetchDataMock.swift */,
 				736E5F6228AD8E3B00F769F2 /* ViewMock.swift */,
 				736E5F6D28AD95B100F769F2 /* StorageMock.swift */,
+				735C859028AEE32F008E9D84 /* DetailViewPresenterTest.swift */,
+				735C859C28AEE49C008E9D84 /* DetailView.swift */,
 			);
 			path = PostsTechnicalTestTests;
 			sourceTree = "<group>";
@@ -410,14 +444,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				735C85AA28AEEA5B008E9D84 /* PostViewModel.swift in Sources */,
 				7370A3EB28A2FE1900D0287B /* MainViewPresenter.swift in Sources */,
 				7370A3D728A2F7A500D0287B /* ServersJSON.swift in Sources */,
 				7370A3DC28A2F96A00D0287B /* FetchData.swift in Sources */,
 				7370A40F28A44D3C00D0287B /* DetailServersJSON.swift in Sources */,
+				735C85B428AEEA83008E9D84 /* UserViewModel.swift in Sources */,
 				7370A40528A440EE00D0287B /* DetailViewController.swift in Sources */,
 				736E5F2D28ABE45C00F769F2 /* Storage.swift in Sources */,
 				7370A39F28A2EF4000D0287B /* MainViewController.swift in Sources */,
 				7370A41728A4501100D0287B /* DetailModel.swift in Sources */,
+				735C85A528AEEA1C008E9D84 /* DetailView.swift in Sources */,
 				7370A3F328A2FE3B00D0287B /* MainPresenter.swift in Sources */,
 				736E5F2328AAE61800F769F2 /* User+CoreDataClass.swift in Sources */,
 				7370A43428A4667500D0287B /* DetailViewPresenter.swift in Sources */,
@@ -426,6 +463,7 @@
 				7370A39D28A2EF4000D0287B /* SceneDelegate.swift in Sources */,
 				7370A42C28A4654100D0287B /* UserModel.swift in Sources */,
 				736E5F2228AAE61800F769F2 /* Comment+CoreDataProperties.swift in Sources */,
+				735C85AF28AEEA78008E9D84 /* CommentViewModel.swift in Sources */,
 				7370A3A528A2EF4000D0287B /* PostsTechnicalTest.xcdatamodeld in Sources */,
 				736E5F1F28AAE61800F769F2 /* Post+CoreDataClass.swift in Sources */,
 				736E5F2028AAE61800F769F2 /* Post+CoreDataProperties.swift in Sources */,
@@ -442,6 +480,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				736E5F5B28AD8E1900F769F2 /* FetchDataMock.swift in Sources */,
+				735C859D28AEE49C008E9D84 /* DetailView.swift in Sources */,
+				735C859128AEE32F008E9D84 /* DetailViewPresenterTest.swift in Sources */,
 				736E5F6328AD8E3B00F769F2 /* ViewMock.swift in Sources */,
 				7370A3B528A2EF4300D0287B /* MainViewPresenterTest.swift in Sources */,
 				736E5F6E28AD95B100F769F2 /* StorageMock.swift in Sources */,

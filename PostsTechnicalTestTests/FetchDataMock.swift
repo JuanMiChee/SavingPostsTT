@@ -9,7 +9,6 @@ import Foundation
 @testable import PostsTechnicalTest
 
 class FetchDataMock: FetchDataProtocol {
-    
     var recivedPostsUrl: URL?
     var recivedPostsCompetion: ((Result<[PostModel], FetchError>) -> Void)?
     
