@@ -46,20 +46,21 @@ class DetailViewPresenterTests: XCTestCase {
     
     func testWhenUserAndCommentsComesFromStorage() throws {
         //given
-        let givenServerUser =  UserPostsModel(name: "", email: "", phone: "", website: "", id: "4")
+        let givenServerUser =  UserPostsModel(name: "Storage", email: "", phone: "", website: "", id: "4")
         let givenComment = CommetModel(postId: "", id: "", body: "")
         let givenComments = [givenComment]
-        storage.userModel = givenServerUser
         storage.commentModel = givenComments
+        storage.userModel = givenServerUser
 
         //when
         sut.handleViewDidLoad(postId: givenComment.postId, userId: givenServerUser.id)
-        fetchData.recivedCommentsCompetion!(.success(storage.commentModel))
-        fetchData.recivedUsersCompetion!(.success(storage.userModel))
+        fetchData.recivedUsersCompetion!(.failure(.networkError(errormessage: "error")))
         
         //then
         XCTAssertEqual(view.recivedComments?.count, 1)
-        XCTAssertEqual(view.recivedUser?.id, "4")
+        //XCTAssertEqual(view.recivedUser?.id, "4")
+        XCTAssertEqual(view.recivedUser?.name, "Storage")
+
     }
     
     func testWhenFailureReciveAlert() throws {

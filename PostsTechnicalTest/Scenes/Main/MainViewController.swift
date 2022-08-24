@@ -19,18 +19,13 @@ class MainViewController: UIViewController {
         let presenter = MainViewPresenter(fetchData: fetchData, fetchCoreData: fetchCoreData)
         presenter.view = self
         return presenter
-
+        
     }()
-    
-   
-    
+
     @IBOutlet weak var DeleteAllButton: UIButton!
     
     var postsArray = [PostViewModel]()
-    var favoritesArray = [PostViewModel]()
-    
-    
-    
+    var tableViewArray = [PostViewModel]()
     var segmentedControlState = 0
     
     @IBOutlet weak var tableView: UITableView!
@@ -39,30 +34,40 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.handleViewDidLoad()
-        // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(addTapped))
         DeleteAllButton.addTarget(self, action: #selector(deleteAllButton), for: .touchUpInside)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.handleViewDidLoad()
+    }
+    
     @objc func addTapped(){
         presenter.handleViewDidLoad()
         tableView.reloadData()
     }
     
-    //@IBAction func changeToFavoritesScreen(_ sender: UISegmentedControl) {
     @IBAction func starredPosts(_ sender: UISegmentedControl){
         if sender.selectedSegmentIndex == 0{
             segmentedControlState = 0
+            tableViewArray = postsArray.sorted(by: { (parameterOne, parameterTwo) in
+                parameterOne.isFavorite || parameterOne.title < parameterTwo.title
+            })
             tableView.reloadData()
-
+            
         }else if sender.selectedSegmentIndex == 1{
             segmentedControlState = 1
+            tableViewArray = postsArray.filter({ (post) -> Bool in
+                post.isFavorite
+            })
             tableView.reloadData()
+            
         }
     }
-    
     
     @objc func deleteAllButton(_ sender: Any) {
         // create the alert
@@ -71,9 +76,9 @@ class MainViewController: UIViewController {
         // add the actions (buttons)
         alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: { action in
             if self.segmentedControlState == 0{
-                self.postsArray = []
+                self.tableViewArray = []
             }else if self.segmentedControlState == 1{
-                self.favoritesArray = []
+                self.tableViewArray = []//favoritesArray = []
             }
             self.tableView.reloadData()
         }))
@@ -95,9 +100,9 @@ extension MainViewController: View{
         print("error corred \(message)")
     }
     
-    func display(result:[PostViewModel], favorites: [PostViewModel]) {
+    func display(result:[PostViewModel]){
         postsArray = result
-        favoritesArray = favorites
+        tableViewArray = postsArray
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -107,16 +112,11 @@ extension MainViewController: View{
 extension MainViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("touched cell")
+        print(tableViewArray[indexPath.row].id)
+        tableView.reloadData()
         let vc = storyboard?.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
-        
-        if segmentedControlState == 0 {
-            vc.postViewModel = postsArray[indexPath.row]
-        }else if segmentedControlState == 1 {
-            vc.postViewModel = favoritesArray[indexPath.row]
-        }
-        vc.toReciveArrayStarred = favoritesArray
+        vc.postViewModel = tableViewArray[indexPath.row]
         vc.mainVC = self
-        //print(postsArray[indexPath.row])
         self.navigationController?.pushViewController(vc, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -127,23 +127,15 @@ extension MainViewController: UITableViewDelegate{
 extension MainViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if segmentedControlState == 0 {
-            return postsArray.count
-        }else{
-            return favoritesArray.count
-        }
+        return tableViewArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         var viewModel: PostViewModel?
         
-
-        if segmentedControlState == 0 {
-            viewModel = postsArray[indexPath.row]
-        }else if segmentedControlState == 1 {
-            viewModel = favoritesArray[indexPath.row]
-        }
+        viewModel = tableViewArray[indexPath.row]
+        
         cell.textLabel?.text = viewModel?.title
         cell.textLabel?.numberOfLines = 0
         cell.accessoryType = .disclosureIndicator

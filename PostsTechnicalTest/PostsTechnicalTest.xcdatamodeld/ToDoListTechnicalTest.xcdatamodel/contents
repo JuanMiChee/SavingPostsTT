@@ -7,6 +7,7 @@
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="id" attributeType="String"/>
+        <attribute name="isFavorite" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="postDesctiption" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="userId" attributeType="String"/>
@@ -20,7 +21,7 @@
     </entity>
     <elements>
         <element name="Comment" positionX="-45" positionY="0" width="128" height="88"/>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="118"/>
         <element name="User" positionX="-54" positionY="-9" width="128" height="118"/>
     </elements>
 </model>

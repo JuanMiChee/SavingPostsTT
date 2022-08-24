@@ -8,8 +8,7 @@
 import Foundation
 @testable import PostsTechnicalTest
 class StorageMock: Storage {
-    
-    var postModels = [PostModel]()
+    var postModels: Set<PostModel> = []
     var userModel = UserPostsModel(name: "", email: "", phone: "", website: "", id: "")
     var commentModel = [CommetModel]()
 
@@ -18,7 +17,7 @@ class StorageMock: Storage {
     var toSaveUsers: UserViewModel!
 
     
-    func fetchPosts() -> [PostModel] {
+    func fetchPosts() -> Set<PostModel> {
         return postModels
     }
     
@@ -30,9 +29,12 @@ class StorageMock: Storage {
         return commentModel
     }
     
-    func savePost(post: PostViewModel, comments: [CommentViewModel], user: UserViewModel) {
-        toSavePosts = post
+    func saveCommentsAndUsers(comments: [CommentViewModel], user: UserViewModel){
         toSaveComments = comments
         toSaveUsers = user
+    }
+    
+    func savePost(post: PostViewModel) {
+        toSavePosts = post
     }
 }

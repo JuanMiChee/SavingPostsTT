@@ -6,7 +6,8 @@
 //
 
 import Foundation
-struct PostModel: Equatable {
+struct PostModel: Hashable {
+    var isFavorite: Bool
     var userId: String
     var id: String
     var title: String

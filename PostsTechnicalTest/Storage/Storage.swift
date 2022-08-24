@@ -10,14 +10,15 @@ import CoreData
 import UIKit
 
 protocol Storage{
-    func fetchPosts() -> [PostModel]
+    func fetchPosts() -> Set<PostModel>
     func fetchUser() -> UserPostsModel?
     func fetchComments() -> [CommetModel]
-    func savePost(post: PostViewModel, comments: [CommentViewModel], user: UserViewModel)
+    func saveCommentsAndUsers(comments: [CommentViewModel], user: UserViewModel)
+    func savePostViewModel(post: PostViewModel)
+    func savePostModel(post: PostModel)
 }
 
 class CoreDataStorage: Storage {
-    
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -52,19 +53,20 @@ class CoreDataStorage: Storage {
             print("error fetching data")
             return UserPostsModel(name: "", email: "", phone: "", website: "", id: "")
         }
-        
-    }
+    }    
     
-    
-    func fetchPosts() -> [PostModel] {
+    func fetchPosts() -> Set<PostModel> {
         do {
             let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
             let savedPosts: [Post] = try self.context.fetch(fetchRequest)
             let mappedPostModels = savedPosts.map { (post) in
-                return PostModel(userId: post.userId, id: post.id, title: post.title, body: post.postDesctiption)
+                return PostModel(isFavorite: post.isFavorite,
+                                 userId: post.userId,
+                                 id: post.id,
+                                 title: post.title,
+                                 body: post.postDesctiption)
             }
-            // self.view?.display(result: mappedPostModels)
-            return mappedPostModels
+            return Set(mappedPostModels)
             
         }catch{
             print("Error fetching data")
@@ -72,13 +74,7 @@ class CoreDataStorage: Storage {
         }
     }
     
-    func savePost(post: PostViewModel, comments: [CommentViewModel], user: UserViewModel){
-        let newPost = Post(context: context)
-        newPost.title = post.title
-        newPost.postDesctiption = post.body
-        newPost.userId =  post.userId
-        newPost.id = post.id
-        
+    func saveCommentsAndUsers(comments: [CommentViewModel], user: UserViewModel){
         let newUser = User(context: context)
         newUser.name = user.name
         newUser.phone = user.phone
@@ -92,6 +88,35 @@ class CoreDataStorage: Storage {
             newComent.postId = comment.postId
             newComent.id = comment.id
         })
+    }
+    
+    func savePostViewModel(post: PostViewModel){
+        let newPost = Post(context: context)
+        newPost.title = post.title
+        newPost.postDesctiption = post.body
+        newPost.userId =  post.userId
+        newPost.id = post.id
+        newPost.isFavorite = post.isFavorite
+        
+        
+        
+        do {
+            try CoreDataStorage().context.save()
+        }
+        catch{
+            print("error\(error)")
+        }
+    }
+    
+    func savePostModel(post: PostModel){
+        let newPost = Post(context: context)
+        newPost.title = post.title
+        newPost.postDesctiption = post.body
+        newPost.userId =  post.userId
+        newPost.id = post.id
+        newPost.isFavorite = post.isFavorite
+        
+        
         
         do {
             try CoreDataStorage().context.save()

@@ -9,8 +9,12 @@ import Foundation
 @testable import PostsTechnicalTest
 
 class FetchDataMock: FetchDataProtocol {
+    
+    
+    
+    
     var recivedPostsUrl: URL?
-    var recivedPostsCompetion: ((Result<[PostModel], FetchError>) -> Void)?
+    var recivedPostsCompetion: ((Result<Set<PostModel>, FetchError>) -> Void)?
     
     var recivedUsersUrl: URL?
     var recivedUsersCompetion: ((Result<UserPostsModel, FetchError>) -> Void)?
@@ -18,21 +22,18 @@ class FetchDataMock: FetchDataProtocol {
     var recivedCommentsUrl: URL?
     var recivedCommentsCompetion: ((Result<[CommetModel], FetchError>) -> Void)?
     
-    func fetchPostsFromServer(url: URL, completion: @escaping (Result<[PostModel], FetchError>) -> Void) {
+    func fetchPostsFromServer(url: URL, completion: @escaping (Result<Set<PostModel>, FetchError>) -> Void) {
         recivedPostsUrl = url
         recivedPostsCompetion = completion
     }
-    
-    func fetchPosts(url: URL, completion: @escaping (Result<[CommetModel], FetchError>) -> Void) {
+
+    func fetchCommentsFromServer(url: URL, completion: @escaping (Result<[CommetModel], FetchError>) -> Void) {
         recivedCommentsUrl = url
         recivedCommentsCompetion = completion
         
     }
-    
-    func userFetchDataFromServer(url: URL, completion: @escaping (Result<UserPostsModel, FetchError>) -> Void) {
+    func fetchUserFromServer(url: URL, completion: @escaping (Result<UserPostsModel, FetchError>) -> Void) {
         recivedUsersUrl = url
         recivedUsersCompetion = completion
     }
-    
-    
 }

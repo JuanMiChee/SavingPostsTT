@@ -27,14 +27,11 @@ class DetailViewController: UIViewController{
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var tableViewTwo: UITableView!
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var websideLabel: UILabel!
     @IBOutlet weak var starButton: UIBarButtonItem!
-    
-    var toReciveArrayStarred: [PostViewModel] = []
     
     var starButtonImageName: String = "star"
     
@@ -46,53 +43,27 @@ class DetailViewController: UIViewController{
         tableViewTwo.delegate = self
         tableViewTwo.dataSource = self
         descriptionLabel.text = postViewModel.body
-        toReciveArrayStarred.append(postViewModel)
+        //toReciveArrayStarred.append(postViewModel)
         
         presenter.handleViewDidLoad(postId: postViewModel.id, userId: postViewModel.userId)
 
-        if isItFavorite(){
+        if postViewModel.isFavorite{
             starButton.image = UIImage(systemName: "star.fill")
         }else{
             starButton.image = UIImage(systemName: "star")
-        }
-    }
-    
-   
-    func isItFavorite() -> Bool{
-        
-        let isFavorite = mainVC?.favoritesArray.contains(where: { (viewModel) -> Bool in
-            if viewModel.id == postViewModel!.id {
-                //presenter.handleFavorites(post: postViewModel)
-                return true
-            }else{
-                //presenter.handleFavorites(post: viewModel)
-                return false
-            }
-        })
-        
-        if isFavorite == true{
-            return true
-        }else{
-            return false
         }
     }
 
     @IBAction func starButtonAction(_ sender: Any) {
-        if isItFavorite() == true{
+        if postViewModel.isFavorite ==  true{
             
             starButton.image = UIImage(systemName: "star")
-            mainVC?.favoritesArray.removeAll(where: { (post) -> Bool in
-                if post.id == postViewModel.id{
-                    return true
-                }else{
-                    
-                    return false
-                }
-            })
+            postViewModel.isFavorite = false
+            presenter.handleFavorites(post: postViewModel, comments: postComments, user: userViewModel, isFavorite: false)
         }else{
-            presenter.handleFavorites(post: postViewModel, comments: postComments, user: userViewModel)
+            postViewModel.isFavorite = true
+            presenter.handleFavorites(post: postViewModel, comments: postComments, user: userViewModel, isFavorite: true)
             starButton.image = UIImage(systemName: "star.fill")
-            mainVC?.favoritesArray = toReciveArrayStarred
         }
     }
 }

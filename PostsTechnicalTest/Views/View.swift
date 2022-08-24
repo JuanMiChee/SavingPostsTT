@@ -9,11 +9,12 @@ import Foundation
 
 
 protocol View: AnyObject {
-    func display(result:[PostViewModel], favorites: [PostViewModel])
+    func display(result:[PostViewModel])//, favorites: [PostViewModel])
     func displayAlert(message: String)
 }
 
 struct PostViewModel {
+    var isFavorite: Bool
     var userId: String
     var id: String
     var title: String

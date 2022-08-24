@@ -12,15 +12,14 @@ enum FetchError: Error {
 }
 
 protocol FetchDataProtocol{
-    func fetchPostsFromServer(url: URL, completion: @escaping (Result<[PostModel], FetchError>) -> Void)
-    func fetchPosts(url: URL, completion: @escaping (Result<[CommetModel], FetchError>) -> Void)
-    func userFetchDataFromServer(url: URL, completion: @escaping (Result<UserPostsModel, FetchError>) -> Void)
+    func fetchPostsFromServer(url: URL, completion: @escaping (Result<Set<PostModel>, FetchError>) -> Void)
+    func fetchCommentsFromServer(url: URL, completion: @escaping (Result<[CommetModel], FetchError>) -> Void)
+    func fetchUserFromServer(url: URL, completion: @escaping (Result<UserPostsModel, FetchError>) -> Void)
 }
-
 
 class FetchData: FetchDataProtocol{
     
-    func userFetchDataFromServer(url: URL, completion: @escaping (Result<UserPostsModel, FetchError>) -> Void) {
+    func fetchUserFromServer(url: URL, completion: @escaping (Result<UserPostsModel, FetchError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
                 if let error = error {
@@ -39,19 +38,21 @@ class FetchData: FetchDataProtocol{
                                         phone: decodedJSON.phone,
                                         website: decodedJSON.website,
                                         id: String(decodedJSON.id))
+                DispatchQueue.main.async {
                     completion(.success(userPost))
-                
-                
+                }
             
             } else {
                 print("Error \(response.statusCode)")
-                completion(.failure(.networkError(errormessage: error?.localizedDescription ?? "nil")))
+                DispatchQueue.main.async {
+                    completion(.failure(.networkError(errormessage: error?.localizedDescription ?? "nil")))
+
+                }
             }
         }.resume()
     }
     
-    
-    func fetchPosts(url: URL, completion: @escaping (Result<[CommetModel], FetchError>) -> Void) {
+    func fetchCommentsFromServer(url: URL, completion: @escaping (Result<[CommetModel], FetchError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
                 if let error = error {
@@ -72,12 +73,11 @@ class FetchData: FetchDataProtocol{
                         return CommetModel(postId: String(detailJSON.postId),
                                                id: String(detailJSON.id),
                                                body: detailJSON.body)
-                        
                     }
-                    
+                DispatchQueue.main.async {
                     completion(.success(viewModels))
-                
-                
+
+                }
             }
             if response.statusCode == 200 {
                 print("200")
@@ -86,13 +86,8 @@ class FetchData: FetchDataProtocol{
             }
         }.resume()
     }
-    
-    
-    
-    
-    //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-    func fetchPostsFromServer(url: URL, completion: @escaping (Result<[PostModel], FetchError>) -> Void) {
+    func fetchPostsFromServer(url: URL, completion: @escaping (Result<Set<PostModel>, FetchError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
                 if let error = error {
@@ -105,21 +100,20 @@ class FetchData: FetchDataProtocol{
                 }
                 return
             }
-            
+    
             if let decodedData = try? JSONDecoder().decode([ServersJSON].self, from: data) {
                 
                     let viewModels: [PostModel] = decodedData.map { (postsJSON) -> PostModel in
                         
-                        return PostModel(userId: String(postsJSON.userId),
+                        return PostModel(isFavorite: false,
+                                         userId: String(postsJSON.userId),
                                          id: String(postsJSON.id),
                                          title: postsJSON.title,
                                          body: postsJSON.body)
-                        
                     }
-                    
-                    completion(.success(viewModels))
-                
-                
+                DispatchQueue.main.async {
+                    completion(.success(Set(viewModels)))
+                }
             }
             if response.statusCode == 200 {
                 print("200")

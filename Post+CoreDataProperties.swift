@@ -20,6 +20,8 @@ extension Post {
     @NSManaged public var postDesctiption: String
     @NSManaged public var userId: String
     @NSManaged public var id: String
+    @NSManaged public var isFavorite: Bool
+
 
 
 }
